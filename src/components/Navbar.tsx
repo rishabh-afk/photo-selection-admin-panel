@@ -1,14 +1,13 @@
 "use client";
 
 import Profile from "./Profile";
+import Notification from "./Notification";
 import { IoSearch } from "react-icons/io5";
 import { debounce } from "@/hooks/general";
 import { useEffect, useState } from "react";
-import DarkLightToggle from "./DarkLightToggle";
 import { useAuth } from "../context/AuthContext";
 import FullScreenButton from "./FullScreenButton";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
-import Notification from "./Notification";
 
 const Navbar: React.FC = () => {
   const { token } = useAuth();
@@ -53,7 +52,6 @@ const Navbar: React.FC = () => {
               </div>
             </div>
             <div className="flex w-1/3 text-iconBlack justify-end items-center gap-2">
-              <DarkLightToggle />
               <Notification />
               <FullScreenButton />
               <Profile />

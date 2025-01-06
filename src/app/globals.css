@@ -8,15 +8,15 @@
   --background: #ffffff;
 
   --black-icon: #000000;
-  --primary-color: #37487b;
-  --secondary-color: #4c5b89;
+  --primary-color: #00b8a5;
+  --secondary-color: ##00897B;
 
   --white-bg: #ffffff;
   --light-white-bg: #f5f6fa;
-  --light-white-color: #a8b6e2;
+  --light-white-color: #ffffff;
 
   --scrollbar-bg: #f0f0f0;
-  --scrollbar-thumb: #37487b;
+  --scrollbar-thumb: #00b8a5;
 }
 
 body {
@@ -62,7 +62,7 @@ html {
   --light-white-color: #8e9bb3;
 
   --scrollbar-bg: #2e2e2e;
-  --scrollbar-thumb: #a8b6e2;
+  --scrollbar-thumb: #ffffff;
 }
 
 /* Dark Theme Overrides */
@@ -85,11 +85,8 @@ html {
   scrollbar-width: none; /* Firefox */
 }
 
-
-
-
 /* required '*' sign */
 .required:after {
-  content:" *";
+  content: " *";
   color: red;
 }
