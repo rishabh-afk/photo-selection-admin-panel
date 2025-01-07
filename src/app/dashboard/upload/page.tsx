@@ -7,9 +7,9 @@ import AuthGuard from "@/components/AuthGuard";
 import Loader from "@/components/common/Loader";
 import Wrapper from "@/components/common/Wrapper";
 import { useDropzone, Accept } from "react-dropzone";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ImCloudUpload } from "react-icons/im";
 import Modal from "../../../../src/components/common/Modal";
-import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
+
 import Image from 'next/image';
 
 const Upload: React.FC = () => {
@@ -163,7 +163,8 @@ const Upload: React.FC = () => {
                                 <p className="text-gray-600 text-sm">
                                     JPG, JPEG, PNG, GIF, SVG (Max file size: 10MB)
                                 </p>
-                                <FontAwesomeIcon icon={faCloudArrowUp} className="text-gray-500 text-4xl" />
+                                {/* <FontAwesomeIcon icon={faCloudArrowUp} className="text-gray-500 text-4xl" /> */}
+                                <ImCloudUpload className="text-gray-500 text-4xl mx-auto"  />
                                 <p className="text-gray-600 text-sm">Click to upload or Browse</p>
                             </div>
                         </div>
@@ -209,7 +210,7 @@ const Upload: React.FC = () => {
                                                 newPreviews.splice(index, 1);
                                                 setImagePreviews(newPreviews);
                                             }}
-                                            className="absolute top-0 right-0 -mt-2 -mr-2 bg-gray-600 w-10 p-2 text-white rounded-full flex items-center justify-center"
+                                            className="absolute text-2xl top-0 right-0 -mt-2 -mr-2 bg-gray-600 w-10 p-1 text-white rounded-full flex items-center justify-center"
                                         >
                                             &times;
                                         </button>
