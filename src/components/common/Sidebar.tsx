@@ -37,6 +37,7 @@ const Sidebar: React.FC = () => {
         </Link>
       </div>
       <nav className="flex flex-col gap-2 justify-center items-center mt-[72px]">
+    
         {filteredTabs.map((tab) => {
           const Icon = tab.icon;
           return (

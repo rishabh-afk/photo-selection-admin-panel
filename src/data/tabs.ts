@@ -21,6 +21,7 @@ export const tabs = [
     pageTitle: "All Leads",
     permission: "Admin",
   },
+  
   {
     id: 5,
     icon: RiAdminFill,
@@ -51,6 +52,14 @@ export const tabs = [
     label: "Manage SEO",
     href: "/dashboard/seo",
     pageTitle: "Search Engine Optimization (SEO)",
+    permission: "SEO",
+  },
+  {
+    id: 7,
+    icon: RiSeoFill,
+    label: "Upload",
+    href: "/dashboard/upload",
+    pageTitle: "Upload Images",
     permission: "SEO",
   },
 ];
