@@ -6,7 +6,7 @@ import { endpoints } from "@/data/endpoints";
 import AuthGuard from "@/components/AuthGuard";
 import Wrapper from "@/components/common/Wrapper";
 import { useDropzone, Accept } from "react-dropzone";
-
+import axios from "axios";
 import Modal from "../../../../src/components/common/Modal";
 import { ImCloudUpload } from "react-icons/im";
 import Image from "next/image";
@@ -26,11 +26,9 @@ const Upload: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
 
-
-
   // Maximum total size allowed for all images
-    const allowedSize = 20
-    const maxTotalSize = allowedSize * 1024 * 1024; 
+  const allowedSize = 20;
+  const maxTotalSize = allowedSize * 1024 * 1024;
 
   const acceptedFileTypes = [
     "image/jpeg",
@@ -47,11 +45,15 @@ const Upload: React.FC = () => {
 
   const onDrop = (acceptedFiles: File[]) => {
     // Calculate the current total size of images including the new ones
-    const currentTotalSize = calculateTotalSize([...imageFiles, ...acceptedFiles]);
+    const currentTotalSize = calculateTotalSize([
+      ...imageFiles,
+      ...acceptedFiles,
+    ]);
 
     if (currentTotalSize > maxTotalSize) {
- 
-      toast.warning(`Total image size exceeds the limit. Please choose smaller images.`);
+      toast.warning(
+        `Total image size exceeds the limit. Please choose smaller images.`
+      );
       return; // Prevent adding files if total size exceeds the limit
     }
 
@@ -128,8 +130,11 @@ const Upload: React.FC = () => {
     setSelectedImageIndex(null);
   };
 
-  // Handle the upload process
   const uploadImages = async () => {
+    if (imageFiles.length === 0) {
+      toast.warning("Please select an image");
+      return; // Exit the function early if no images are selected
+    }
     setIsUploading(true);
     setUploadProgress(Array(imagePreviews.length).fill(0)); // Initialize progress bar
 
@@ -139,30 +144,90 @@ const Upload: React.FC = () => {
         formData.append("images[]", file, `image-${index}.jpg`);
       });
 
-      // Simulate upload progress (fake endpoint)
-      for (let i = 0; i < imagePreviews.length; i++) {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1 second per image
-        setUploadProgress((prev) => {
-          const newProgress = [...prev];
-          newProgress[i] = 100; // Simulate 100% upload
-          return newProgress;
+      // Initialize progress tracking for each image
+      const uploadPromises = imageFiles.map((file, index) => {
+        return new Promise<void>((resolve, reject) => {
+          const config = {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            onUploadProgress: (progressEvent: any) => {
+              // Calculate the upload progress as a percentage
+              const progress = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+
+              // Update the progress for the specific image
+              setUploadProgress((prev) => {
+                const newProgress = [...prev];
+                newProgress[index] = progress;
+                return newProgress;
+              });
+            },
+          };
+
+          // Simulating upload via actual endpoint (use axios or fetch for real request)
+          axios
+            .post("API_ENDPOINT_HERE", formData, config)
+            .then(() => {
+              setUploadProgress((prev) => {
+                const newProgress = [...prev];
+                newProgress[index] = 100; // Mark this image as fully uploaded
+                return newProgress;
+              });
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Upload failed for image", index, error);
+              reject(error);
+            });
         });
-      }
+      });
 
-      // API call, e.g.:
-      // await fetch('your-upload-endpoint', {
-      //     method: 'POST',
-      //     body: formData,
-      // });
+      // Wait for all uploads to finish (in real-life, the uploads happen concurrently)
+      await Promise.all(uploadPromises);
 
-      // Show success message
+      // Show success message after all images are uploaded
       toast.success("Images uploaded successfully!");
     } catch (error) {
       console.error("Upload failed:", error);
-      setErrorMessage("Upload failed.");
-      toast.error("Upload failed.");
+
+      toast.error("Please Try Later!");
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const saveAsDraft = async () => {
+    if (imageFiles.length === 0) {
+      toast.warning("Please select an image");
+      return; // Exit the function early if no images are selected
+    }
+    try {
+      // Create FormData to hold the images for submission
+      const formData = new FormData();
+
+      // Append all selected image files to the FormData
+      imageFiles.forEach((file, index) => {
+        formData.append("images[]", file, `image-${index}.jpg`);
+      });
+
+      // Send the form data to your API endpoint using axios (change the URL as needed)
+      const response = await axios.post("YOUR_API_ENDPOINT_HERE", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // If the response is successful, show a success toast
+      if (response.status === 200) {
+        toast.success("Draft saved successfully!");
+      }
+    } catch (error) {
+      console.error("Error saving draft:", error);
+      toast.error(
+        "An error occurred while saving the draft. Please try again later."
+      );
     }
   };
 
@@ -193,8 +258,9 @@ const Upload: React.FC = () => {
                 </p>
               </div>
             </div>
-            {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
-           
+            {errorMessage && (
+              <p className="text-red-500 text-center">{errorMessage}</p>
+            )}
           </div>
 
           {imagePreviews.length > 0 && (
@@ -207,18 +273,47 @@ const Upload: React.FC = () => {
                       alt={`Image Preview ${index}`}
                       width={500}
                       height={192}
-                      className="w-full h-48 object-cover rounded-lg  transition-opacity duration-300 ease-in-out group-hover:opacity-80"
+                      className="w-full h-48 object-cover rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-80"
                     />
-                    {/* Show loader if uploading */}
-                    {isUploading && uploadProgress[index] < 100 && (
-                      <div
-                        className="absolute bottom-0 left-0 w-full bg-white"
-                        style={{
-                          height: `${100 - uploadProgress[index]}%`,
-                          transition: "height 1s ease-out",
-                        }}
-                      ></div>
+                    {/* Circular Progress */}
+
+                    {isUploading && (
+                      <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
+                        <svg
+                          className="w-16 h-16 transform" // Rotate to make progress start from the top
+                          viewBox="0 0 120 120"
+                        >
+                          <circle
+                            cx="60"
+                            cy="60"
+                            r="54"
+                            stroke="#4d90fe"
+                            strokeWidth="12"
+                            fill="none"
+                            strokeDasharray="339.292" // Circumference of the circle
+                            // We need to keep strokeDashoffset as inline style due to dynamic calculation
+                            style={{
+                              strokeDashoffset:
+                                (1 - uploadProgress[index] / 100) * 339.292,
+                            }}
+                            strokeLinecap="round"
+                            className="transition-all duration-300 ease-in-out"
+                          />
+                          <text
+                            x="50%"
+                            y="50%"
+                            textAnchor="middle"
+                            dy=".3em"
+                            fill="white"
+                            fontSize="25"
+                            fontWeight="bold"
+                          >
+                            {uploadProgress[index]}%
+                          </text>
+                        </svg>
+                      </div>
                     )}
+
                     {/* Hover effect */}
                     <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <button
@@ -255,12 +350,20 @@ const Upload: React.FC = () => {
             >
               Cancel
             </button>
-            <button
+            {/* <button
               onClick={() => alert("Drafts saved!")}
               className="bg-gray-500 text-white py-1 px-4 rounded-lg hover:bg-gray-600 focus:outline-none transition-all duration-200"
             >
               Save as Draft
+            </button> */}
+
+            <button
+              onClick={saveAsDraft} // Call saveAsDraft function
+              className="bg-gray-500 text-white py-1 px-4 rounded-lg hover:bg-gray-600 focus:outline-none transition-all duration-200"
+            >
+              Save as Draft
             </button>
+
             <button
               onClick={uploadImages}
               className="bg-primary text-white py-1 px-4 rounded-lg hover:bg-primary-dark focus:outline-none transition-all duration-200"
