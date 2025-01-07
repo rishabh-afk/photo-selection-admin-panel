@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { tabs } from "@/data/tabs";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -25,19 +25,18 @@ const Sidebar: React.FC = () => {
     >
       <div className="flex justify-center border-b border-b-secondary bg-primary w-[17%] items-center py-[11px] fixed top-0">
         <Link href={"/dashboard"}>
-          {/* <Image
+          <Image
+            src={"/assets/logo/white_logo.png"}
+            alt="logo"
+            width={125}
+            height={100}
             priority
-            width={150}
-            height={50}
-            alt="Unfazed_Logo"
             unoptimized
-            src={"/assets/logo/logo.jpg"}
-          /> */}
-          <h1 className="text-3xl">MASKEEN</h1>
+            className="mx-auto w-2/3 object-contain"
+          />
         </Link>
       </div>
       <nav className="flex flex-col gap-2 justify-center items-center mt-[72px]">
-    
         {filteredTabs.map((tab) => {
           const Icon = tab.icon;
           return (

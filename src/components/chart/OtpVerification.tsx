@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { Post } from "@/hooks/apiUtils";
 import Link from "next/link";
+import { Post } from "@/hooks/apiUtils";
 import { CiEdit } from "react-icons/ci";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import React, { useState, useRef, useEffect } from "react";
 
 const OtpVerification = ({
   email,
-  // setOtpLocal,
-  // handleGoBack,
   setIsModalVisible,
 }: {
   email: any;
@@ -39,9 +37,7 @@ const OtpVerification = ({
       return () => clearInterval(interval);
     } else {
       setIsResendDisabled(false);
-      // setOtpLocal();
     }
-    // eslint-disable-next-line
   }, [timer]);
 
   const handleChange = (
@@ -88,9 +84,9 @@ const OtpVerification = ({
     }
   };
 
-  const handleGoBack = ()=>{
+  const handleGoBack = () => {
     router.prefetch("/auth/login");
-  }
+  };
 
   const handleResend = async () => {
     setTimer(30);
@@ -119,7 +115,7 @@ const OtpVerification = ({
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="bg-white px-6 items-center w-full max-w-md">
-      <h6 className="text-md font-bold text-primary text-center mb-4">
+        <h6 className="text-md font-bold text-primary text-center mb-4">
           Enter OTP to verify your <br className="hidden bg:block" /> E-mail
         </h6>
         <p className="text-center text-xs text-primary/70 mb-5">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { IoPrintSharp, IoShareOutline } from "react-icons/io5";
 
@@ -64,9 +65,13 @@ const OrderedProducts: React.FC = () => {
           <tbody>
             {products.map((product, index) => (
               <tr key={product.id} className="border-b">
-                <td className="py-4 px-6">{index + 1 < 10 ? `0${index + 1}` : index + 1}.</td>
+                <td className="py-4 px-6">
+                  {index + 1 < 10 ? `0${index + 1}` : index + 1}.
+                </td>
                 <td className="py-4 px-6 flex items-center space-x-4">
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     src={product.imageUrl}
                     alt={product.name}
                     className="w-12 h-12 rounded-md object-cover"
@@ -76,15 +81,27 @@ const OrderedProducts: React.FC = () => {
                     <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full inline-block">
                       {product.discount}
                     </span>
-                    <p className="text-xs text-gray-600 mt-1">Color: {product.color}</p>
-                    <p className="text-xs text-gray-600">Size: {product.size}</p>
+                    <p className="text-xs text-gray-600 mt-1">
+                      Color: {product.color}
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      Size: {product.size}
+                    </p>
                   </div>
                 </td>
                 <td className="py-4 px-6">
-                  <span className="text-pink-500 font-medium">${product.price}</span>{" "}
-                  <span className="line-through text-gray-400">${product.originalPrice}</span>
+                  <span className="text-pink-500 font-medium">
+                    ${product.price}
+                  </span>{" "}
+                  <span className="line-through text-gray-400">
+                    ${product.originalPrice}
+                  </span>
                 </td>
-                <td className="py-4 px-6">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</td>
+                <td className="py-4 px-6">
+                  {product.quantity < 10
+                    ? `0${product.quantity}`
+                    : product.quantity}
+                </td>
                 <td className="py-4 px-6">
                   <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
                     {product.trackingId}
@@ -103,7 +120,7 @@ const OrderedProducts: React.FC = () => {
           <span>Print</span>
         </button>
         <button className="bg-purple-500 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-purple-600 transition">
-        <IoShareOutline size={15} className="" />
+          <IoShareOutline size={15} className="" />
           <span>Share Details</span>
         </button>
       </div>
