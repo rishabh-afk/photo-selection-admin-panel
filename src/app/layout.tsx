@@ -21,7 +21,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 export const metadata: Metadata = {
-  title: "INQERP | Ledger",
+  title: "Pickma | Photo Admin Panel",
   description: "The ledger is connected to the blockchain.",
 };
 
