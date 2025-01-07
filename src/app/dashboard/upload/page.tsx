@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import { endpoints } from "@/data/endpoints";
 import AuthGuard from "@/components/AuthGuard";
-import Loader from "@/components/common/Loader";
 import Wrapper from "@/components/common/Wrapper";
 import { useDropzone, Accept } from "react-dropzone";
-import { ImCloudUpload } from "react-icons/im";
-import Modal from "../../../../src/components/common/Modal";
 
+import Modal from "../../../../src/components/common/Modal";
+import { ImCloudUpload } from "react-icons/im";
 import Image from 'next/image';
+import { toast } from "react-toastify";
+import Loader from "@/components/common/Loader";
 
 const Upload: React.FC = () => {
     const { data, loading, error } = useFetch(endpoints["Contact"].fetchAll);
@@ -19,8 +20,8 @@ const Upload: React.FC = () => {
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-    const [isUploading, setIsUploading] = useState(false); // State to track the upload status
-    const [uploadProgress, setUploadProgress] = useState<number[]>([]); // Track progress for each image
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState<number[]>([]);
 
     const acceptedFileTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg", "image/svg+xml"];
 
@@ -72,8 +73,6 @@ const Upload: React.FC = () => {
 
     if (loading && !updatedData && !error) return <Loader />;
 
-    const operationsAllowed = endpoints["Contact"].operations;
-
     const prevImage = () => {
         if (selectedImageIndex !== null && selectedImageIndex > 0) {
             setSelectedImageIndex(selectedImageIndex - 1);
@@ -119,10 +118,13 @@ const Upload: React.FC = () => {
             //     body: formData,
             // });
 
-            console.log("Images uploaded successfully!");
+            // Show success message
+            toast.success("Images uploaded successfully!");
+
         } catch (error) {
             console.error("Upload failed:", error);
             setErrorMessage("Upload failed.");
+            toast.error("Upload failed.");
         } finally {
             setIsUploading(false);
         }
@@ -163,8 +165,9 @@ const Upload: React.FC = () => {
                                 <p className="text-gray-600 text-sm">
                                     JPG, JPEG, PNG, GIF, SVG (Max file size: 10MB)
                                 </p>
-                                {/* <FontAwesomeIcon icon={faCloudArrowUp} className="text-gray-500 text-4xl" /> */}
-                                <ImCloudUpload className="text-gray-500 text-4xl mx-auto"  />
+                                {/* <FontAwesomeIcon icon={faCloudArrowUp} className="text-gray-500 text-4xl" />
+                                 */}
+                                 <ImCloudUpload className="text-gray-500 text-4xl mx-auto"  />
                                 <p className="text-gray-600 text-sm">Click to upload or Browse</p>
                             </div>
                         </div>
@@ -210,7 +213,7 @@ const Upload: React.FC = () => {
                                                 newPreviews.splice(index, 1);
                                                 setImagePreviews(newPreviews);
                                             }}
-                                            className="absolute text-2xl top-0 right-0 -mt-2 -mr-2 bg-gray-600 w-10 p-1 text-white rounded-full flex items-center justify-center"
+                                            className="absolute top-0 right-0 -mt-2 -mr-2 bg-gray-600 w-10 p-2 text-white rounded-full flex items-center justify-center"
                                         >
                                             &times;
                                         </button>
@@ -255,10 +258,10 @@ const Upload: React.FC = () => {
                         </button>
                         <Image
                             src={imagePreviews[selectedImageIndex]}
-                            alt="Preview"
-                            className="w-full max-w-2xl rounded-lg shadow-lg"
+                            alt={`Image Preview ${selectedImageIndex}`}
                             width={500}
-                            height={192}
+                            height={500}
+                            className="w-auto h-auto object-cover"
                         />
                         <button
                             onClick={nextImage}
