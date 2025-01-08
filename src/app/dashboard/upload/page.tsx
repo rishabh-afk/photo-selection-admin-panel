@@ -6,7 +6,7 @@ import { endpoints } from "@/data/endpoints";
 import AuthGuard from "@/components/AuthGuard";
 import Wrapper from "@/components/common/Wrapper";
 import { useDropzone, Accept } from "react-dropzone";
-import axios from "axios";
+
 import Modal from "../../../../src/components/common/Modal";
 import { ImCloudUpload } from "react-icons/im";
 import Image from "next/image";
@@ -135,14 +135,14 @@ const Upload: React.FC = () => {
       toast.warning("Please select an image");
       return; // Exit the function early if no images are selected
     }
-  
+
     setIsUploading(true);
     setUploadProgress(Array(imagePreviews.length).fill(0)); // Initialize progress bar for all images
-  
+
     try {
       // Simulate upload delay for each image with progress update
       const progressUpdates = imageFiles.map((_, index) => {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve,) => {
           let progress = 0;
           const interval = setInterval(() => {
             progress += 10; // Increase progress by 10% every 500ms
@@ -151,7 +151,7 @@ const Upload: React.FC = () => {
               newProgress[index] = progress; // Update progress for the specific image
               return newProgress;
             });
-  
+
             if (progress >= 100) {
               clearInterval(interval); // Stop the progress once it reaches 100%
               resolve();
@@ -159,12 +159,12 @@ const Upload: React.FC = () => {
           }, 500); // 500ms interval for simulating progress update
         });
       });
-  
+
       // Wait for all upload progress to finish
       await Promise.all(progressUpdates);
-  
+
       // Replace the following with an API call to upload the images
-      // Example: 
+      // Example:
       // const formData = new FormData();
       // imageFiles.forEach((file) => formData.append('images[]', file));
       // const response = await axios.post("API_UPLOAD_ENDPOINT", formData);
@@ -173,7 +173,7 @@ const Upload: React.FC = () => {
       // } else {
       //   toast.error("Failed to upload images.");
       // }
-  
+
       // Show success message after all images are uploaded
       toast.success("Images uploaded successfully!");
     } catch (error) {
@@ -183,7 +183,7 @@ const Upload: React.FC = () => {
       setIsUploading(false);
     }
   };
-  
+
   const saveAsDraft = async () => {
     if (imageFiles.length === 0) {
       toast.warning("Please select an image");
@@ -193,9 +193,9 @@ const Upload: React.FC = () => {
       // Simulate saving the draft after 3 seconds
       setTimeout(() => {
         // After 3 seconds, simulate a successful save action
-  
+
         // Replace the following with an API call to save the draft
-        // Example: 
+        // Example:
         // const formData = new FormData();
         // imageFiles.forEach((file) => formData.append('images[]', file));
         // const response = await axios.post("API_DRAFT_ENDPOINT", formData);
@@ -204,16 +204,16 @@ const Upload: React.FC = () => {
         // } else {
         //   toast.error("Failed to save draft.");
         // }
-  
+
         toast.success("Draft saved successfully!");
       }, 3000);
     } catch (error) {
       console.error("Error saving draft:", error);
-      toast.error("An error occurred while saving the draft. Please try again later.");
+      toast.error(
+        "An error occurred while saving the draft. Please try again later."
+      );
     }
   };
-  
-  
 
   // const uploadImages = async () => {
   //   if (imageFiles.length === 0) {
@@ -435,7 +435,6 @@ const Upload: React.FC = () => {
             >
               Cancel
             </button>
-          
 
             <button
               onClick={saveAsDraft} // Call saveAsDraft function

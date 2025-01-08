@@ -1,6 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import React from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { PiCurrencyInrFill } from "react-icons/pi";
@@ -23,15 +22,11 @@ interface AccordionTableProps {
 
 const AccordionTable: React.FC<AccordionTableProps> = ({
   transactions,
-  operationsAllowed,
+//   operationsAllowed,
   Heading,
   isSort,
 }) => {
-  const [expandedRow, setExpandedRow] = useState<string | null>(null);
-
-  const toggleAccordion = (id: string) => {
-    setExpandedRow(expandedRow === id ? null : id);
-  };
+ 
 
   return (
     <>

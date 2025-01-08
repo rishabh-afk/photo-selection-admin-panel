@@ -3,7 +3,6 @@
 import Home from "@/components/dashboard/Home";
 import Wrapper from "@/components/common/Wrapper";
 import AuthGuard from "../../components/AuthGuard";
-import Summary from "@/components/dashboard/Summary";
 import AccordionTable from "@/components/common/AccordionTable";
 import Loader from "@/components/common/Loader";
 
@@ -13,7 +12,7 @@ const dummyTransactions = [
     id: "12345abcd",
     username: "John Doe",
     date: "2025-01-08",
-    contact: "123-456-7890",  // Changed to 'contact'
+    contact: "123-456-7890", // Changed to 'contact'
     package: "Wedding Photography",
     status: "Current",
   },
@@ -21,7 +20,7 @@ const dummyTransactions = [
     id: "67890efgh",
     username: "Jane Smith",
     date: "2025-01-07",
-    contact: "987-654-3210",  // Changed to 'contact'
+    contact: "987-654-3210", // Changed to 'contact'
     package: "Wedding Photography",
     status: "Current",
   },
@@ -29,13 +28,11 @@ const dummyTransactions = [
     id: "11223ijkl",
     username: "Alice Brown",
     date: "2025-01-06",
-    contact: "555-666-7777",  // Changed to 'contact'
+    contact: "555-666-7777", // Changed to 'contact'
     package: "Wedding Photography",
     status: "Current",
-    
   },
 ];
-
 
 const dummyOperationsAllowed = [
   { action: "edit", status: true },
@@ -49,7 +46,6 @@ const Dashboard: React.FC = () => {
   const loading = false;
   const error = null;
   const updatedData = dummyTransactions;
-  const paginationData = { page: 1, totalPages: 1 }; // Simulate pagination
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -59,7 +55,7 @@ const Dashboard: React.FC = () => {
         <div>
           <Home />
           <AccordionTable
-          isSort={true}
+            isSort={true}
             Heading={"UpComing Bookings "}
             transactions={updatedData} // Pass dummy transaction data
             operationsAllowed={dummyOperationsAllowed} // Pass dummy operations allowed data

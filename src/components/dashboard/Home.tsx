@@ -1,12 +1,5 @@
 // pages/index.tsx
 import { FC } from "react";
-import { CRMStats } from "@/hooks/types";
-import LineGraph from "../chart/Linegraph";
-import { IoStatsChart } from "react-icons/io5";
-import { ImParagraphLeft } from "react-icons/im";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
-import ConcentricCircleGraph from "../chart/ConcentricCircleGraph";
-import BarChartWithNegativePositiveXAxis from "../chart/BarChartWithNegativePositiveXAxis";
 import Image from "next/image";
 
 

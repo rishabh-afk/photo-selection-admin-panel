@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 interface Transaction {
   id: string;
@@ -9,28 +8,22 @@ interface Transaction {
   contact: string;
   package: string;
   status: string;
-  
 }
-
 
 interface AccordionTableProps {
   transactions: Transaction[];
   operationsAllowed?: any; // This can be extended to use wherever needed
-  Heading:any;
-  isSort:any;
+  Heading: any;
+  isSort: any;
 }
 
 const AccordionTable: React.FC<AccordionTableProps> = ({
   transactions,
-  operationsAllowed,
+  // operationsAllowed,
   Heading,
-  isSort
+  isSort,
 }) => {
-  const [expandedRow, setExpandedRow] = useState<string | null>(null);
-
-  const toggleAccordion = (id: string) => {
-    setExpandedRow(expandedRow === id ? null : id);
-  };
+  const [expandedRow] = useState<string | null>(null);
 
   return (
     <div className="mt-10 text-sm">
@@ -39,40 +32,40 @@ const AccordionTable: React.FC<AccordionTableProps> = ({
           style={{ fontFamily: "Roboto" }}
           className="font-extrabold text-black text-lg"
         >
-         {Heading} 
+          {Heading}
         </h2>
         {isSort && (
-  <button
-    style={{
-      width: "7rem",
-      height: "3rem",
-      borderRadius: "5px",
-      border: "2px solid #00897B", // border color inside
-      backgroundColor: "#00897B",
-      color: "#FFFFFF",
-      paddingTop: "10px",
-      paddingRight: "15px",
-      paddingBottom: "10px",
-      paddingLeft: "15px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontSize: "14px",
-    }}
-  >
-    {/* Image */}
-    <Image
-      src="/assets/icons/sort.svg"
-      alt="Sort Icon"
-      width={15}
-      height={15}
-    />
-    {/* Text */}
-    <span style={{ color: "#FFFFFF", marginLeft: "10px" }}>Sort By</span>
-  </button>
-)}
-
-
+          <button
+            style={{
+              width: "7rem",
+              height: "3rem",
+              borderRadius: "5px",
+              border: "2px solid #00897B", // border color inside
+              backgroundColor: "#00897B",
+              color: "#FFFFFF",
+              paddingTop: "10px",
+              paddingRight: "15px",
+              paddingBottom: "10px",
+              paddingLeft: "15px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "14px",
+            }}
+          >
+            {/* Image */}
+            <Image
+              src="/assets/icons/sort.svg"
+              alt="Sort Icon"
+              width={15}
+              height={15}
+            />
+            {/* Text */}
+            <span style={{ color: "#FFFFFF", marginLeft: "10px" }}>
+              Sort By
+            </span>
+          </button>
+        )}
       </div>
 
       <div
@@ -108,7 +101,8 @@ const AccordionTable: React.FC<AccordionTableProps> = ({
           <tbody>
             {transactions.map((transaction) => (
               <React.Fragment key={transaction.id}>
-                <tr style={{fontWeight:"bold"}}
+                <tr
+                  style={{ fontWeight: "bold" }}
                   className="hover:bg-primary/10 cursor-pointer "
                   // onClick={() => toggleAccordion(transaction.id)}
                 >
@@ -119,15 +113,13 @@ const AccordionTable: React.FC<AccordionTableProps> = ({
                     {transaction.username}
                   </td>
                   <td className="py-3 text-xs pl-4">{transaction.date}</td>
-                  <td className="py-3 text-xs pl-4">
-                    {transaction.package}
-                  </td>
+                  <td className="py-3 text-xs pl-4">{transaction.package}</td>
                   <td className="py-3 text-xs pl-4">{transaction.contact}</td>
                   <td className="py-3 text-xs pl-4 capitalize">
                     <p
                       className={`uppercase text-center mt-2 text-xs py-2 rounded-[6px] text-white ${
                         transaction.status === "Current"
-                          ? "bg-[#00897B] px-0" 
+                          ? "bg-[#00897B] px-0"
                           : transaction.status === "initiated"
                           ? "bg-yellow-300 px-2"
                           : "bg-orange-500 px-2"
