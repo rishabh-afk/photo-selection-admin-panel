@@ -27,6 +27,7 @@ const Users: React.FC = () => {
   return (
     <AuthGuard>
       <Wrapper>
+        
         <TableComponent
           type="Admin"
           columns={columns}

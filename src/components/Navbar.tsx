@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       {stateReady && token && (
-        <nav
+        <nav style={{ boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.25)' }}
           className={`fixed bg-whiteBg w-[83%] ml-[17%] z-50 px-4 py-2 text-black`}
         >
           <div className="flex justify-between items-center">

@@ -135,101 +135,186 @@ const Upload: React.FC = () => {
       toast.warning("Please select an image");
       return; // Exit the function early if no images are selected
     }
+  
     setIsUploading(true);
-    setUploadProgress(Array(imagePreviews.length).fill(0)); // Initialize progress bar
-
+    setUploadProgress(Array(imagePreviews.length).fill(0)); // Initialize progress bar for all images
+  
     try {
-      const formData = new FormData();
-      imageFiles.forEach((file, index) => {
-        formData.append("images[]", file, `image-${index}.jpg`);
-      });
-
-      // Initialize progress tracking for each image
-      const uploadPromises = imageFiles.map((file, index) => {
+      // Simulate upload delay for each image with progress update
+      const progressUpdates = imageFiles.map((_, index) => {
         return new Promise<void>((resolve, reject) => {
-          const config = {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: (progressEvent: any) => {
-              // Calculate the upload progress as a percentage
-              const progress = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total
-              );
-
-              // Update the progress for the specific image
-              setUploadProgress((prev) => {
-                const newProgress = [...prev];
-                newProgress[index] = progress;
-                return newProgress;
-              });
-            },
-          };
-
-          // Simulating upload via actual endpoint (use axios or fetch for real request)
-          axios
-            .post("API_ENDPOINT_HERE", formData, config)
-            .then(() => {
-              setUploadProgress((prev) => {
-                const newProgress = [...prev];
-                newProgress[index] = 100; // Mark this image as fully uploaded
-                return newProgress;
-              });
-              resolve();
-            })
-            .catch((error) => {
-              console.error("Upload failed for image", index, error);
-              reject(error);
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += 10; // Increase progress by 10% every 500ms
+            setUploadProgress((prev) => {
+              const newProgress = [...prev];
+              newProgress[index] = progress; // Update progress for the specific image
+              return newProgress;
             });
+  
+            if (progress >= 100) {
+              clearInterval(interval); // Stop the progress once it reaches 100%
+              resolve();
+            }
+          }, 500); // 500ms interval for simulating progress update
         });
       });
-
-      // Wait for all uploads to finish (in real-life, the uploads happen concurrently)
-      await Promise.all(uploadPromises);
-
+  
+      // Wait for all upload progress to finish
+      await Promise.all(progressUpdates);
+  
+      // Replace the following with an API call to upload the images
+      // Example: 
+      // const formData = new FormData();
+      // imageFiles.forEach((file) => formData.append('images[]', file));
+      // const response = await axios.post("API_UPLOAD_ENDPOINT", formData);
+      // if (response.status === 200) {
+      //   toast.success("Images uploaded successfully!");
+      // } else {
+      //   toast.error("Failed to upload images.");
+      // }
+  
       // Show success message after all images are uploaded
       toast.success("Images uploaded successfully!");
     } catch (error) {
       console.error("Upload failed:", error);
-
       toast.error("Please Try Later!");
     } finally {
       setIsUploading(false);
     }
   };
-
+  
   const saveAsDraft = async () => {
     if (imageFiles.length === 0) {
       toast.warning("Please select an image");
       return; // Exit the function early if no images are selected
     }
     try {
-      // Create FormData to hold the images for submission
-      const formData = new FormData();
-
-      // Append all selected image files to the FormData
-      imageFiles.forEach((file, index) => {
-        formData.append("images[]", file, `image-${index}.jpg`);
-      });
-
-      // Send the form data to your API endpoint using axios (change the URL as needed)
-      const response = await axios.post("YOUR_API_ENDPOINT_HERE", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // If the response is successful, show a success toast
-      if (response.status === 200) {
+      // Simulate saving the draft after 3 seconds
+      setTimeout(() => {
+        // After 3 seconds, simulate a successful save action
+  
+        // Replace the following with an API call to save the draft
+        // Example: 
+        // const formData = new FormData();
+        // imageFiles.forEach((file) => formData.append('images[]', file));
+        // const response = await axios.post("API_DRAFT_ENDPOINT", formData);
+        // if (response.status === 200) {
+        //   toast.success("Draft saved successfully!");
+        // } else {
+        //   toast.error("Failed to save draft.");
+        // }
+  
         toast.success("Draft saved successfully!");
-      }
+      }, 3000);
     } catch (error) {
       console.error("Error saving draft:", error);
-      toast.error(
-        "An error occurred while saving the draft. Please try again later."
-      );
+      toast.error("An error occurred while saving the draft. Please try again later.");
     }
   };
+  
+  
+
+  // const uploadImages = async () => {
+  //   if (imageFiles.length === 0) {
+  //     toast.warning("Please select an image");
+  //     return; // Exit the function early if no images are selected
+  //   }
+  //   setIsUploading(true);
+  //   setUploadProgress(Array(imagePreviews.length).fill(0)); // Initialize progress bar
+
+  //   try {
+  //     const formData = new FormData();
+  //     imageFiles.forEach((file, index) => {
+  //       formData.append("images[]", file, `image-${index}.jpg`);
+  //     });
+
+  //     // Initialize progress tracking for each image
+  //     const uploadPromises = imageFiles.map((file, index) => {
+  //       return new Promise<void>((resolve, reject) => {
+  //         const config = {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //           onUploadProgress: (progressEvent: any) => {
+  //             // Calculate the upload progress as a percentage
+  //             const progress = Math.round(
+  //               (progressEvent.loaded * 100) / progressEvent.total
+  //             );
+
+  //             // Update the progress for the specific image
+  //             setUploadProgress((prev) => {
+  //               const newProgress = [...prev];
+  //               newProgress[index] = progress;
+  //               return newProgress;
+  //             });
+  //           },
+  //         };
+
+  //         // Simulating upload via actual endpoint (use axios or fetch for real request)
+  //         axios
+  //           .post("API_ENDPOINT_HERE", formData, config)
+  //           .then(() => {
+  //             setUploadProgress((prev) => {
+  //               const newProgress = [...prev];
+  //               newProgress[index] = 100; // Mark this image as fully uploaded
+  //               return newProgress;
+  //             });
+  //             resolve();
+  //           })
+  //           .catch((error) => {
+  //             console.error("Upload failed for image", index, error);
+  //             reject(error);
+  //           });
+  //       });
+  //     });
+
+  //     // Wait for all uploads to finish (in real-life, the uploads happen concurrently)
+  //     await Promise.all(uploadPromises);
+
+  //     // Show success message after all images are uploaded
+  //     toast.success("Images uploaded successfully!");
+  //   } catch (error) {
+  //     console.error("Upload failed:", error);
+
+  //     toast.error("Please Try Later!");
+  //   } finally {
+  //     setIsUploading(false);
+  //   }
+  // };
+
+  // const saveAsDraft = async () => {
+  //   if (imageFiles.length === 0) {
+  //     toast.warning("Please select an image");
+  //     return; // Exit the function early if no images are selected
+  //   }
+  //   try {
+  //     // Create FormData to hold the images for submission
+  //     const formData = new FormData();
+
+  //     // Append all selected image files to the FormData
+  //     imageFiles.forEach((file, index) => {
+  //       formData.append("images[]", file, `image-${index}.jpg`);
+  //     });
+
+  //     // Send the form data to your API endpoint using axios (change the URL as needed)
+  //     const response = await axios.post("YOUR_API_ENDPOINT_HERE", formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+
+  //     // If the response is successful, show a success toast
+  //     if (response.status === 200) {
+  //       toast.success("Draft saved successfully!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error saving draft:", error);
+  //     toast.error(
+  //       "An error occurred while saving the draft. Please try again later."
+  //     );
+  //   }
+  // };
 
   return (
     <AuthGuard>
@@ -350,12 +435,7 @@ const Upload: React.FC = () => {
             >
               Cancel
             </button>
-            {/* <button
-              onClick={() => alert("Drafts saved!")}
-              className="bg-gray-500 text-white py-1 px-4 rounded-lg hover:bg-gray-600 focus:outline-none transition-all duration-200"
-            >
-              Save as Draft
-            </button> */}
+          
 
             <button
               onClick={saveAsDraft} // Call saveAsDraft function
@@ -384,7 +464,7 @@ const Upload: React.FC = () => {
             {/* Left Slider Button */}
             <button
               onClick={prevImage}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-600 focus:outline-none"
+              className="absolute text-2xl w-14 left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-600 focus:outline-none"
             >
               &lt;
             </button>
@@ -403,7 +483,7 @@ const Upload: React.FC = () => {
             {/* Right Slider Button */}
             <button
               onClick={nextImage}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-600 focus:outline-none"
+              className="absolute text-2xl w-14 right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-600 focus:outline-none"
             >
               &gt;
             </button>
