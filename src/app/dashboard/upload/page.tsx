@@ -264,90 +264,84 @@ const Upload: React.FC = () => {
           </div>
 
           {imagePreviews.length > 0 && (
-  <div className="bg-white p-6 mb-8">
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 mt-4">
-      {imagePreviews.map((preview, index) => (
-        <div key={index} className="relative group">
-          <Image
-            src={preview}
-            alt={`Image Preview ${index}`}
-            width={500}
-            height={192}
-            className={`w-full h-48 object-cover rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-80 ${isUploading ? 'opacity-50' : ''}`} // Add opacity-50 when uploading
-          />
-          {/* Circular Progress */}
-          {isUploading && (
-            <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
-              <svg
-                className="w-16 h-16 transform" // Rotate to make progress start from the top
-                viewBox="0 0 120 120"
-              >
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="54"
-                  stroke="#4d90fe"
-                  strokeWidth="12"
-                  fill="none"
-                  strokeDasharray="339.292" // Circumference of the circle
-                  style={{
-                    strokeDashoffset:
-                      (1 - uploadProgress[index] / 100) * 339.292,
-                  }}
-                  strokeLinecap="round"
-                  className="transition-all duration-300 ease-in-out"
-                />
-                <text
-                  x="50%"
-                  y="50%"
-                  textAnchor="middle"
-                  dy=".3em"
-                  fill="white"
-                  fontSize="25"
-                  fontWeight="bold"
-                >
-                  {uploadProgress[index]}%
-                </text>
-              </svg>
+            <div className="bg-white p-6 mb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 mt-4">
+                {imagePreviews.map((preview, index) => (
+                  <div key={index} className="relative group">
+                    <Image
+                      src={preview}
+                      alt={`Image Preview ${index}`}
+                      width={500}
+                      height={192}
+                      className={`w-full h-48 object-cover rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-80 ${
+                        isUploading ? "opacity-50" : ""
+                      }`} // Add opacity-50 when uploading
+                    />
+                    {/* Circular Progress */}
+                    {isUploading && (
+                      <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
+                        <svg
+                          className="w-16 h-16 transform" // Rotate to make progress start from the top
+                          viewBox="0 0 120 120"
+                        >
+                          <circle
+                            cx="60"
+                            cy="60"
+                            r="54"
+                            stroke="#4d90fe"
+                            strokeWidth="12"
+                            fill="none"
+                            strokeDasharray="339.292" // Circumference of the circle
+                            style={{
+                              strokeDashoffset:
+                                (1 - uploadProgress[index] / 100) * 339.292,
+                            }}
+                            strokeLinecap="round"
+                            className="transition-all duration-300 ease-in-out"
+                          />
+                          <text
+                            x="50%"
+                            y="50%"
+                            textAnchor="middle"
+                            dy=".3em"
+                            fill="white"
+                            fontSize="25"
+                            fontWeight="bold"
+                          >
+                            {uploadProgress[index]}%
+                          </text>
+                        </svg>
+                      </div>
+                    )}
+
+                    {/* Hover effect */}
+                    <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <button
+                        onClick={() => setSelectedImageIndex(index)} // Set the selected image index for modal
+                        className="bg-gray-700 text-white px-4 py-2 rounded-lg"
+                      >
+                        Preview
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newPreviews = [...imagePreviews];
+                        const newFiles = [...imageFiles];
+                        newPreviews.splice(index, 1);
+                        newFiles.splice(index, 1);
+                        setImagePreviews(newPreviews);
+                        setImageFiles(newFiles);
+                      }}
+                      className="absolute text-3xl top-0 right-0 -mt-2 -mr-2 bg-red-400 w-8 h-8 pb-2 text-white rounded-full flex items-center justify-center"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
-
-          {/* Hover effect */}
-          <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button
-              onClick={() => setSelectedImageIndex(index)} // Set the selected image index for modal
-              className="bg-gray-700 text-white px-4 py-2 rounded-lg"
-            >
-              Preview
-            </button>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              const newPreviews = [...imagePreviews];
-              const newFiles = [...imageFiles];
-              newPreviews.splice(index, 1);
-              newFiles.splice(index, 1);
-              setImagePreviews(newPreviews);
-              setImageFiles(newFiles);
-            }}
-            className="absolute text-3xl top-0 right-0 -mt-2 -mr-2 bg-red-400 w-8 h-8 pb-2 text-white rounded-full flex items-center justify-center"
-          >
-            &times;
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
-
-
-
-
-
-
-
 
           <div className="flex justify-end space-x-4 mt-4">
             <button
