@@ -33,9 +33,9 @@ export const tabs = [
   {
     id: 2,
     icon: FaBlog,
-    label: "Manage Blogs",
-    href: "/dashboard/blogs",
-    pageTitle: "Blogs",
+    label: "Wallet",
+    href: "/dashboard/wallet",
+    pageTitle: "wallet",
     permission: "Blogs",
   },
   {
@@ -59,6 +59,14 @@ export const tabs = [
     icon: RiSeoFill,
     label: "Upload",
     href: "/dashboard/upload",
+    pageTitle: "Upload Images",
+    permission: "SEO",
+  },
+  {
+    id: 8,
+    icon: RiSeoFill,
+    label: "Thisweek",
+    href: "/dashboard/thisweek",
     pageTitle: "Upload Images",
     permission: "SEO",
   },

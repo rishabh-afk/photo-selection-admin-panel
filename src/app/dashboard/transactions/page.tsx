@@ -10,7 +10,7 @@ import AccordionTable from "@/components/common/AccordionTable";
 const Transactions: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Transaction"].fetchAll);
   const updatedData = data?.data?.result;
-  const paginationData = data?.data?.pagination;
+
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -20,9 +20,8 @@ const Transactions: React.FC = () => {
       <Wrapper>
         <AccordionTable
           transactions={updatedData}
-          pagination_data={paginationData}
-          operationsAllowed={operationsAllowed}
-        />
+
+          operationsAllowed={operationsAllowed} Heading={undefined} isSort={undefined}        />
       </Wrapper>
     </AuthGuard>
   );

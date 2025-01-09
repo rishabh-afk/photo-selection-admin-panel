@@ -1,36 +1,35 @@
 "use client";
 
-import Home from "@/components/dashboard/Home";
-import Wrapper from "@/components/common/Wrapper";
-import AuthGuard from "../../components/AuthGuard";
-import AccordionTable from "@/components/common/AccordionTable";
+import AuthGuard from "@/components/AuthGuard";
 import Loader from "@/components/common/Loader";
+import Wrapper from "@/components/common/Wrapper";
 
-// Mocked Data
+import AccordionTable from "@/components/common/SubscriptionTable";
+
 const dummyTransactions = [
   {
-    id: "12345abcd",
-    username: "John Doe",
+    invoice: "12345abcd",
+    status: "Recieved",
     date: "2025-01-08",
-    contact: "123-456-7890", // Changed to 'contact'
+    amount: 200.0,
     package: "Wedding Photography",
-    status: "Current",
+    action: "Download",
   },
   {
-    id: "67890efgh",
-    username: "Jane Smith",
-    date: "2025-01-07",
-    contact: "987-654-3210", // Changed to 'contact'
+    invoice: "12145abcd",
+    status: "Recieved",
+    date: "2025-01-08",
+    amount: 200.0,
     package: "Wedding Photography",
-    status: "Current",
+    action: "Download",
   },
   {
-    id: "11223ijkl",
-    username: "Alice Brown",
-    date: "2025-01-06",
-    contact: "555-666-7777", // Changed to 'contact'
+    invoice: "16345abcd",
+    status: "Recieved",
+    date: "2025-01-08",
+    amount: 200.0,
     package: "Wedding Photography",
-    status: "Current",
+    action: "Download",
   },
 ];
 
@@ -41,7 +40,7 @@ const dummyOperationsAllowed = [
   { action: "refund", status: true },
 ];
 
-const Dashboard: React.FC = () => {
+const Wallet: React.FC = () => {
   // Since this is dummy data, we can simulate loading and error states
   const loading = false;
   const error = null;
@@ -53,12 +52,11 @@ const Dashboard: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <div>
-          <Home />
           <AccordionTable
-            isSort={true}
-            Heading={"UpComing Bookings "}
+            isSort={false}
             transactions={updatedData} // Pass dummy transaction data
             operationsAllowed={dummyOperationsAllowed} // Pass dummy operations allowed data
+            Heading={""}
           />
         </div>
       </Wrapper>
@@ -66,4 +64,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Wallet;

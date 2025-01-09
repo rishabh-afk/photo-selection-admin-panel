@@ -1,8 +1,7 @@
 "use client";
 
-import Home from "@/components/dashboard/Home";
 import Wrapper from "@/components/common/Wrapper";
-import AuthGuard from "../../components/AuthGuard";
+import AuthGuard from "@/components/AuthGuard";
 import AccordionTable from "@/components/common/AccordionTable";
 import Loader from "@/components/common/Loader";
 
@@ -10,7 +9,7 @@ import Loader from "@/components/common/Loader";
 const dummyTransactions = [
   {
     id: "12345abcd",
-    username: "John Doe",
+    username: "hey",
     date: "2025-01-08",
     contact: "123-456-7890", // Changed to 'contact'
     package: "Wedding Photography",
@@ -53,12 +52,11 @@ const Dashboard: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <div>
-          <Home />
           <AccordionTable
-            isSort={true}
-            Heading={"UpComing Bookings "}
+            isSort={false}
             transactions={updatedData} // Pass dummy transaction data
             operationsAllowed={dummyOperationsAllowed} // Pass dummy operations allowed data
+            Heading={"This Week Events"}
           />
         </div>
       </Wrapper>
