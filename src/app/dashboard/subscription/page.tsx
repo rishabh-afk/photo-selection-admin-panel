@@ -6,29 +6,15 @@ import { VscAccount } from "react-icons/vsc";
 import Image from "next/image";
 import { MdCircle } from "react-icons/md";
 import PlanBoxes from "@/components/common/PlansBoxes";
-import AlertModel from "@/components/common/AlertModel";
-import { useState } from "react";
+import AlertButton from "@/components/common/AlertButton";
 
 // Mocked Data
 
 const Subscription: React.FC = () => {
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   const handleConfirm = () => {
-    console.log('Confirmed!');
-    setIsModalOpen(false);
+    console.log("Confirmed!");
+    alert("awork");
   };
-
-
 
   return (
     <AuthGuard>
@@ -94,10 +80,10 @@ const Subscription: React.FC = () => {
               </div>
               <div className="flex flex-col ml-[10px]">
                 <span className="text-black font-inter text-[10px] font-medium leading-normal">
-                Monthly GB Limit 
+                  Monthly GB Limit
                 </span>
                 <span className="text-black font-inter text-[24px] font-medium leading-normal">
-                100 GB
+                  100 GB
                 </span>
               </div>
             </div>
@@ -114,10 +100,10 @@ const Subscription: React.FC = () => {
               </div>
               <div className="flex flex-col ml-[10px]">
                 <span className="text-black font-inter text-[10px] font-medium leading-normal">
-                Plan Cost
+                  Plan Cost
                 </span>
                 <span className="text-black font-inter text-[24px] font-medium leading-normal">
-                ₹ 499.00/mo
+                  ₹ 499.00/mo
                 </span>
               </div>
             </div>
@@ -135,10 +121,10 @@ const Subscription: React.FC = () => {
 
               <div className="flex flex-col ml-[10px]">
                 <span className="text-black font-inter text-[10px] font-medium leading-normal">
-                Renew Date
+                  Renew Date
                 </span>
                 <span className="text-black font-inter text-[24px] font-medium leading-normal">
-                Fab 16, 2025
+                  Fab 16, 2025
                 </span>
               </div>
             </div>
@@ -152,11 +138,12 @@ const Subscription: React.FC = () => {
             </span>
 
             <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-  <div className="bg-[#00897B] h-2.5 rounded-full" style={{width:"45%"}}></div>
-                <MdCircle className="text-[#00897B] w-[24px] h-[200px]  absolute top-[213px] right-[569px]" />
-</div>
-
-            
+              <div
+                className="bg-[#00897B] h-2.5 rounded-full"
+                style={{ width: "45%" }}
+              ></div>
+              <MdCircle className="text-[#00897B] w-[24px] h-[200px]  absolute top-[213px] right-[569px]" />
+            </div>
 
             {/* Buttons */}
             <div className="flex justify-between w-full">
@@ -174,55 +161,45 @@ const Subscription: React.FC = () => {
             </div>
           </div>
 
-
-
           {/* Upgrade and get more */}
           <div className="flex flex-col space-y-[20px] mt-8">
-          <span className="text-black font-roboto text-[24px] font-semibold leading-normal">
-          Upgrade and Get More
+            <span className="text-black font-roboto text-[24px] font-semibold leading-normal">
+              Upgrade and Get More
             </span>
 
             <div className="flex justify-between mt-8">
-            <PlanBoxes btnName="Current Plan" isPopular={false} price={14.99} />
-            <PlanBoxes btnName="Upgrade to Pro" isPopular={true} price={49.99} />
-            <PlanBoxes btnName="Upgrade to Plus" isPopular={false} price={14.99} />
-
-
-
-          
-
-            
-            
+              <PlanBoxes
+                btnName="Current Plan"
+                isPopular={false}
+                price={14.99}
+              />
+              <PlanBoxes
+                btnName="Upgrade to Pro"
+                isPopular={true}
+                price={49.99}
+              />
+              <PlanBoxes
+                btnName="Upgrade to Plus"
+                isPopular={false}
+                price={14.99}
+              />
+            </div>
           </div>
-          </div>
-
-
-
-
-
-
 
           <div className="flex flex-col space-y-[20px] mt-8">
-          <div>
-      <button onClick={handleOpenModal}>Open Modal</button>
-      
-      <AlertModel
-      head = "Main Heading"
-      color = {"gray"}
-        question="logout from your account"
-        onClose={handleCloseModal}
-        onConfirm={handleConfirm}
-        isOpen={isModalOpen}
-        buttonName="Logout" // Optional, you can pass "YES" if no name is provided
-      />
-    </div>
+            <AlertButton
+              //   name of the button
+              btnCall="Alert"
+              head="Main Heading"
+              color="gray"
+              question="logout from your account"
+              onConfirm={handleConfirm} // Only pass onConfirm
+              //   name of the button inside the button
+              buttonName="Logout" // Optional, if no name is provided, it defaults to "Logout"
+            />
 
+            <div></div>
           </div>
-
-
-
-
-
         </>
       </Wrapper>
     </AuthGuard>
