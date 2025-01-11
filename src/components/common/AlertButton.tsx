@@ -11,6 +11,7 @@ interface AlertButtonProps {
   head?: string;
   color?: string;
   btnCall?: string;
+  isPopular?: boolean;
 }
 
 const AlertButton: React.FC<AlertButtonProps> = ({ 
@@ -19,7 +20,8 @@ const AlertButton: React.FC<AlertButtonProps> = ({
   buttonName, 
   head, 
   color,
-  btnCall
+  btnCall,
+  isPopular
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,9 +41,18 @@ const AlertButton: React.FC<AlertButtonProps> = ({
             {/* Button to trigger modal */}
             <button
   onClick={handleOpenModal}
-  className="bg-[#00897B] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#006f5f] hover:scale-105 active:scale-95 transition-all duration-300"
->
+
+  className={`flex w-[208.127px] h-[45.361px] px-[17.789px] py-[13.341px] justify-center items-center gap-[8.894px] flex-shrink-0 rounded-[17.789px] ${
+    isPopular
+      ? "bg-[#00897B] border-[0.889px] border-[#00897B] text-white"
+      : "bg-white border-[0.889px] border-[#00897B] text-[#00897B]"
+  }`}
+
+
+ 
+><span className="text-center font-roboto text-[16.01px] font-medium leading-normal">
   {btnCall}
+  </span>
 </button>
 
 
@@ -63,3 +74,26 @@ const AlertButton: React.FC<AlertButtonProps> = ({
 };
 
 export default AlertButton;
+
+
+
+// use this
+{/* <AlertButton
+//   name of the button
+btnCall="Alert"
+head="Main Heading"
+color="gray"
+question="logout from your account"
+onConfirm={handleConfirm} // Only pass onConfirm
+//   name of the button inside the button
+buttonName="Logout" // Optional, if no name is provided, it defaults to "Logout"
+
+/> */}
+
+
+
+
+// const handleConfirm = () => {
+//   console.log("Confirmed!");
+//   alert("awork");
+// };

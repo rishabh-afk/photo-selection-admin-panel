@@ -6,15 +6,43 @@ import { VscAccount } from "react-icons/vsc";
 import Image from "next/image";
 import { MdCircle } from "react-icons/md";
 import PlanBoxes from "@/components/common/PlansBoxes";
-import AlertButton from "@/components/common/AlertButton";
-
-// Mocked Data
+import React, { useEffect, useState } from "react";
 
 const Subscription: React.FC = () => {
-  const handleConfirm = () => {
-    console.log("Confirmed!");
-    alert("awork");
-  };
+  const [data, setData] = useState<any[]>([]); // Assuming the data is an array of objects
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // when u will get the base url
+  //   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL; // Accessing the base URL from the .env file
+
+  //   if (!baseUrl) {
+  //     setError('Base URL is not defined');
+  //     setLoading(false);
+  //     return;
+  //   }
+  // const response = await fetch(`${baseUrl}/api/storagePackage/get-all`);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://192.168.0.159:8000/api/storagePackage/get-all`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const result = await response.json();
+        setData(result.data); // Assuming result.data contains the array of storage packages
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <AuthGuard>
@@ -168,36 +196,35 @@ const Subscription: React.FC = () => {
             </span>
 
             <div className="flex justify-between mt-8">
-              <PlanBoxes
-                btnName="Current Plan"
-                isPopular={false}
-                price={14.99}
-              />
-              <PlanBoxes
-                btnName="Upgrade to Pro"
-                isPopular={true}
-                price={49.99}
-              />
-              <PlanBoxes
-                btnName="Upgrade to Plus"
-                isPopular={false}
-                price={14.99}
-              />
+              <div>
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error}</p>}
+                {!loading && !error && data.length > 0 && (
+                  <div>
+                    {data.map((item,index) => (
+                        <div key={index}>
+
+                      <PlanBoxes
+                        oID={item._id}
+                        btnName="Subscribe"
+                        isPopular={false}
+                        price={item.price}
+                        planName={item.name}
+                        storageLimit={item.storageLimit}
+                        unit={item.unit}
+                        duration={item.duration}
+                        durationUnit={item.durationUnit}
+                        isActive={item.isActive}
+                        />
+                        </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           <div className="flex flex-col space-y-[20px] mt-8">
-            <AlertButton
-              //   name of the button
-              btnCall="Alert"
-              head="Main Heading"
-              color="gray"
-              question="logout from your account"
-              onConfirm={handleConfirm} // Only pass onConfirm
-              //   name of the button inside the button
-              buttonName="Logout" // Optional, if no name is provided, it defaults to "Logout"
-            />
-
             <div></div>
           </div>
         </>
