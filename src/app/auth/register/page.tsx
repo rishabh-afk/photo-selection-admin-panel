@@ -5,31 +5,38 @@ import { Post } from "@/hooks/apiUtils";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 const Register: React.FC = () => {
-
   const { token, login } = useAuth();
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [role, setRole] = useState("");
+  const [mobile, setMobile] = useState("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
+  const [isButtonDisable, setIsButtonDisable] = useState(true);
+  const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
-
     e.preventDefault();
 
     const response: any = await Post(
-      "/api/public/admin/login",
+      "/api/public/signup",
       {
-        identifier:  emailOrPhone,
-        password: password,
+        name: firstName + " " + lastName,
+        email: email,
+        mobile: mobile,
+        role: role,
+        isEmailVerified: false,
+        isMobileVerified: false,
+        password: confirmPassword,
       },
       5000
     );
@@ -37,6 +44,7 @@ const Register: React.FC = () => {
       const token = response?.data?.accessToken;
       const adminDetails = response?.data?.user;
       login(token, adminDetails);
+      router.prefetch("/dashboard");
     }
   };
 
@@ -71,7 +79,6 @@ const Register: React.FC = () => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-        
 
             <form className="mr-auto" onSubmit={handleRegister}>
               {" "}
@@ -106,8 +113,8 @@ const Register: React.FC = () => {
                   </label>{" "}
                   <input
                     type="text"
-                    value={emailOrPhone}
-                    onChange={(e) => setEmailOrPhone(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 border rounded outline-1 outline-gray-200"
                   />{" "}
                 </div>{" "}
@@ -120,6 +127,33 @@ const Register: React.FC = () => {
                     onChange={(e) => setDateOfBirth(e.target.value)}
                     className="w-full px-4 py-2 border rounded outline-1 outline-gray-200"
                   />{" "}
+                </div>{" "}
+              </div>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="">
+                  {" "}
+                  <label className="block mb-1">Phone Number</label>{" "}
+                  <input
+                    type="text"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    className="w-full px-4 py-2 border rounded outline-1 outline-gray-200"
+                  />{" "}
+                </div>{" "}
+                <div className="">
+                  {" "}
+                  <label className="block mb-1">Role</label>{" "}
+                  <select
+                    className="w-full px-4 py-2 border rounded outline-1 outline-gray-200"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="photographer" selected>
+                      Photographer
+                    </option>
+                    <option value="user">User</option>
+                  </select>
                 </div>{" "}
               </div>
               <div className="grid grid-cols-2 gap-4 mb-4">
@@ -166,7 +200,12 @@ const Register: React.FC = () => {
                       placeholder="Enter confirm password"
                       className={`w-full px-4 py-2.5 placeholder:text-gray-400 text-sm bg-transparent outline-1 outline-gray-200 rounded-l-sm`}
                       type={showPassword ? "text" : "password"}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        if (password === e.target.value) {
+                          setIsButtonDisable(false);
+                        }
+                      }}
                     />
                     {showConfirmPassword ? (
                       <span className=" active:bg-[#00897B] bg-[#f3f2ff] py-1 rounded-r-md ">
@@ -208,7 +247,10 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleRegister}
-                  className={`w-full bg-primary text-white px-4 py-2 rounded ${termsAccepted?"":"cursor-not-allowed"}`}
+                  disabled={isButtonDisable && termsAccepted}
+                  className={`w-full bg-primary text-white px-4 py-2 rounded ${
+                    termsAccepted && isButtonDisable ? "" : "cursor-not-allowed"
+                  }`}
                 >
                   {" "}
                   Continue{" "}
