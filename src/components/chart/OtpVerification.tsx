@@ -113,15 +113,15 @@ const OtpVerification = ({
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="bg-white px-6 items-center w-full max-w-md">
-        <h6 className="text-md font-bold text-primary text-center mb-4">
+    <div className="flex flex-col items-center py-5 justify-center">
+      <div className="bg-white items-center w-full">
+        <h6 className="text-lg font-bold text-primary text-left mb-4">
           Enter OTP to verify your <br className="hidden bg:block" /> E-mail
         </h6>
-        <p className="text-center text-xs text-primary/70 mb-5">
+        <p className="text-left pl-2 text-sm text-primary/70 mb-5">
           We&apos;ve sent an OTP to this E-mail Address <br />
-          <span className="text-primary/70 pt-1 flex justify-center items-center font-semibold cursor-pointer">
-            {email}{" "}
+          <span className="text-primary/70 pt-1 flex justify-left items-center font-semibold cursor-pointer">
+            {email }{" "}
             <span
               onClick={handleGoBack}
               className="text-primary hover:text-primary/80 hover:underline text-xs pl-2 cursor-pointer"
@@ -146,7 +146,7 @@ const OtpVerification = ({
               ref={(el) => {
                 inputRefs.current[index] = el as HTMLInputElement;
               }}
-              className="w-full aspect-square text-center border focus:border-2 border-primary/30 rounded-md focus:outline-none focus:border-primary/70 text-lg" // Reduced font size
+              className="w-12 aspect-square text-center border focus:border-2 border-primary/30 rounded-md focus:outline-none focus:border-primary/70 text-lg" // Reduced font size
             />
           ))}
         </form>
@@ -174,10 +174,10 @@ const OtpVerification = ({
           type="submit"
           onClick={handleSubmit}
           disabled={isButtonDisabled}
-          className={`w-full py-1 text-white rounded-md transition text-m duration-200 ${
+          className={`w-full bg-primary text-white px-4 py-2 rounded ${
             isButtonDisabled
-              ? "btn-primary cursor-not-allowed"
-              : "btn-primary hover:bg-primary-700"
+              ? "bg-primary cursor-not-allowed"
+              : "bg-primary hover:bg-primary-700"
           }`}
         >
           Verify

@@ -14,6 +14,8 @@ const Account = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  
+
   const handleSaveChanges = () => {
     // Handle save changes logic
   };
