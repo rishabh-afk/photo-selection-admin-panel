@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         if (response?.success && response?.data) {
           setLoading(false);
           setToken(sharedToken);
-          setUser(response?.data);
+          setUser(response?.data?.user);
           return navigate.replace("/dashboard");
         } else return navigate.replace("/auth/login");
       } catch (error) {

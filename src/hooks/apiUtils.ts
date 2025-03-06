@@ -32,7 +32,6 @@ const request = async <T>(
     () => controller.abort(),
     config.timeout || 10000
   );
-
   try {
     // Handle multipart form data
     if (config.data instanceof FormData) {
@@ -136,6 +135,7 @@ export const Post = async <T>(
       data,
       timeout,
     });
+    console.log(response,'ashdfasj')
     handleToast(
       toastId,
       "success",

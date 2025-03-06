@@ -3,7 +3,7 @@ import { FC } from "react";
 import Image from "next/image";
 
 
-const HomeN: FC = () => {
+const Home: FC = () => {
  
 
   return (
@@ -213,4 +213,4 @@ const HomeN: FC = () => {
   );
 };
 
-export default HomeN;
+export default Home;

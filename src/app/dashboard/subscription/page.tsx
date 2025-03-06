@@ -6,48 +6,20 @@ import { VscAccount } from "react-icons/vsc";
 import Image from "next/image";
 import { MdCircle } from "react-icons/md";
 import PlanBoxes from "@/components/common/PlansBoxes";
-import React, { useEffect, useState } from "react";
+import AlertButton from "@/components/common/AlertButton";
+
+// Mocked Data
 
 const Subscription: React.FC = () => {
-  const [data, setData] = useState<any[]>([]); // Assuming the data is an array of objects
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  // when u will get the base url
-  //   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL; // Accessing the base URL from the .env file
-
-  //   if (!baseUrl) {
-  //     setError('Base URL is not defined');
-  //     setLoading(false);
-  //     return;
-  //   }
-  // const response = await fetch(`${baseUrl}/api/storagePackage/get-all`);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://192.168.0.159:8000/api/storagePackage/get-all`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const result = await response.json();
-        setData(result.data); // Assuming result.data contains the array of storage packages
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const handleConfirm = () => {
+    console.log("Confirmed!");
+    alert("awork");
+  };
 
   return (
     <AuthGuard>
       <Wrapper>
-        <>
+        <div className="pl-4">
           {/* first box */}
           <div className="flex justify-between items-center w-full">
             <span className="text-black font-roboto text-3xl font-bold leading-normal">
@@ -78,7 +50,7 @@ const Subscription: React.FC = () => {
 
           {/* buttons we have */}
           <div className="flex space-x-[20px] justify-between mt-6">
-            <div className="w-22 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
+            <div className="w-18 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
               <Image
                 src="/assets/icons/basic.svg"
                 alt="Sort Icon"
@@ -96,7 +68,7 @@ const Subscription: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-22 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
+            <div className="w-18 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
               <div className="w-[40px] h-[40px] bg-[#00897B] rounded-full flex justify-center items-center">
                 <Image
                   src="/assets/icons/GB.svg"
@@ -116,7 +88,7 @@ const Subscription: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-22 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
+            <div className="w-18 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
               <div className="w-[40px] h-[40px] bg-[#00897B] rounded-full flex justify-center items-center">
                 <Image
                   src="/assets/icons/RS.svg"
@@ -136,7 +108,7 @@ const Subscription: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-22 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
+            <div className="w-18 h-18 flex-shrink-0 rounded-[20px] border-[1px] border-[#00897B] bg-[rgba(0,137,123,0.10)] flex items-center px-8 py-2">
               <div className="w-[40px] h-[40px] bg-[#00897B] rounded-full flex justify-center items-center">
                 <Image
                   src="/assets/icons/time.svg"
@@ -152,82 +124,70 @@ const Subscription: React.FC = () => {
                   Renew Date
                 </span>
                 <span className="text-black font-inter text-[24px] font-medium leading-normal">
-                  Fab 16, 2025
+                  Feb 16, 2025
                 </span>
               </div>
             </div>
           </div>
 
           {/* Monthly used data */}
-          <div className="flex flex-col space-y-[20px] mt-8">
-            {/* Monthly Used GB Data Text */}
-            <span className="text-black font-roboto text-[24px] font-semibold leading-normal">
-              Monthly Used GB Data
-            </span>
-
-            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+          <div className="mb-8 flex flex-col space-y-[20px] mt-8">
+            <h2 className="text-xl font-semibold mb-4">Monthly Used GB Data</h2>
+            <div className="relative w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-[#00897B] h-2.5 rounded-full"
+                className="absolute bg-[#00897B] h-2 rounded-full"
                 style={{ width: "45%" }}
               ></div>
-              <MdCircle className="text-[#00897B] w-[24px] h-[200px]  absolute top-[213px] right-[569px]" />
+              <MdCircle className="absolute text-[#00897B] top-[-8px] right-[55%] w-6 h-6" />
             </div>
 
-            {/* Buttons */}
-            <div className="flex justify-between w-full">
-              <button className="flex w-[107px] p-[10px] justify-center items-center gap-[10px] rounded-[5px] border-[1px] border-[#00897B] bg-[#00897B]">
-                <span className="text-white font-roboto text-[12px] font-medium leading-normal">
-                  40 GB Used
-                </span>
+            <div className="flex justify-between mt-4">
+              <button className="px-4 py-2 bg-[#00897B] text-white rounded-md">
+                40 GB Used
               </button>
-
-              <button className="flex w-[107px] p-[10px] justify-center items-center gap-[10px] rounded-[5px] border-[1px] border-[#00897B] bg-[#00897B]">
-                <span className="text-white font-roboto text-[12px] font-medium leading-normal">
-                  60 GB Left
-                </span>
+              <button className="px-4 py-2 bg-[#00897B] text-white rounded-md">
+                60 GB Left
               </button>
             </div>
           </div>
 
           {/* Upgrade and get more */}
-          <div className="flex flex-col space-y-[20px] mt-8">
-            <span className="text-black font-roboto text-[24px] font-semibold leading-normal">
-              Upgrade and Get More
-            </span>
-
-            <div className="flex justify-between mt-8">
-              <div>
-                {loading && <p>Loading...</p>}
-                {error && <p>Error: {error}</p>}
-                {!loading && !error && data.length > 0 && (
-                  <div>
-                    {data.map((item,index) => (
-                        <div key={index}>
-
-                      <PlanBoxes
-                        oID={item._id}
-                        btnName="Subscribe"
-                        isPopular={false}
-                        price={item.price}
-                        planName={item.name}
-                        storageLimit={item.storageLimit}
-                        unit={item.unit}
-                        duration={item.duration}
-                        durationUnit={item.durationUnit}
-                        isActive={item.isActive}
-                        />
-                        </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Upgrade and Get More</h2>
+            <div className="flex gap-4 pt-4 overflow-x-auto">
+              {/* PlanBox ki width aur height ko yahan set kar rahe hain */}
+              <PlanBoxes
+                btnName="Current Plan"
+                isPopular={false}
+                price={14.99}
+              />
+              <PlanBoxes
+                btnName="Upgrade to Pro"
+                isPopular={true}
+                price={49.99}
+              />
+              <PlanBoxes
+                btnName="Upgrade to Plus"
+                isPopular={false}
+                price={14.99}
+              />
             </div>
           </div>
-
           <div className="flex flex-col space-y-[20px] mt-8">
+            <AlertButton
+              //   name of the button
+              btnCall="Alert"
+              head="Main Heading"
+              color="gray"
+              question="logout from your account"
+              onConfirm={handleConfirm} // Only pass onConfirm
+              //   name of the button inside the button
+              buttonName="Logout" // Optional, if no name is provided, it defaults to "Logout"
+            />
+
             <div></div>
           </div>
-        </>
+        </div>
       </Wrapper>
     </AuthGuard>
   );

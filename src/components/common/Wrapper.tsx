@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 
 const Wrapper = ({
@@ -8,8 +7,8 @@ const Wrapper = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className=" pt-[70px] ml-[17%]">
-      <div className="p-4 pt-2 min-h-screen">{children}</div>
+    <div className="pt-[4.7%] ml-[18%]">
+      <div className="p-4 min-h-screen">{children}</div>
       <p className="flex text-sm p-5 gap-1 text-gray-500 bg-whiteBg justify-center items-center">
         Copywrite © {new Date().getFullYear()}
         <strong className="text-blue-500"> Maskeen</strong>. Designed with ❤️ by

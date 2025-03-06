@@ -1,7 +1,6 @@
 import { SiGoogleadmob } from "react-icons/si";
-import {  RiAdminFill } from "react-icons/ri";
-
-import { FaBlog, FaHome, FaQuestionCircle } from "react-icons/fa";
+import { RiSeoFill, RiAdminFill } from "react-icons/ri";
+import { FaBlog, FaHome } from "react-icons/fa";
 
 // Define tabs
 export const tabs = [
@@ -16,77 +15,83 @@ export const tabs = [
   },
   {
     id: 2,
-    icon: FaQuestionCircle,
+    icon: SiGoogleadmob,
     label: "Create Plans",
     href: "/dashboard/create-plan",
-    pageTitle: "Create Plan",
-    permission: "CreatePlan",
+    pageTitle: "All Plans",
+    permission: "Admin",
   },
   {
     id: 3,
-    icon: FaQuestionCircle,
+    icon: SiGoogleadmob,
     label: "Bookings",
     href: "/dashboard/booking",
-    pageTitle: "Bookings",
-    permission: "Bookings",
+    pageTitle: "All Bookings",
+    permission: "Admin",
   },
-
   {
     id: 4,
     icon: SiGoogleadmob,
-    label: "Upload Photos",
-    href: "/dashboard/upload",
-    pageTitle: "Upload Photos",
-    permission: "uploadPhotos",
+    label: "Uploaded Photos",
+    href: "/dashboard/uploaded-photos",
+    pageTitle: "Uploaded Photos",
+    permission: "Admin",
   },
-
   {
     id: 5,
-    icon: FaBlog,
-    label: "approved",
+    icon: SiGoogleadmob,
+    label: "Approved Photos",
     href: "/dashboard/approved-photos",
-    pageTitle: "approved",
-    permission: "approvedPhotos",
+    pageTitle: "Approved Photos",
+    permission: "Admin",
   },
-
   {
     id: 6,
     icon: FaBlog,
     label: "Wallet",
     href: "/dashboard/wallet",
     pageTitle: "wallet",
-    permission: "Wallet",
+    permission: "Blogs",
   },
-  
-
-
-
   {
     id: 7,
-    icon: SiGoogleadmob,
+    icon: RiAdminFill,
     label: "Subscription",
     href: "/dashboard/subscription",
     pageTitle: "Subscription",
-    permission: "subscription",
+    permission: "Admin",
   },
-  
+
   {
     id: 8,
-    icon: RiAdminFill,
+    icon: SiGoogleadmob,
     label: "Profile",
-    href: "/dashboard/profile",
-    pageTitle: "Profile",
-    permission: "profile",
+    href: "/dashboard/account",
+    pageTitle: "My Profile",
+    permission: "Admin",
   },
-
- 
-  // {
-  //   id: 7,
-  //   icon: RiSeoFill,
-  //   label: "Upload",
-  //   href: "/dashboard/upload",
-  //   pageTitle: "Upload Images",
-  //   permission: "Upload",
-  // },
-
+  {
+    id: 9,
+    icon: RiSeoFill,
+    label: "Manage SEO",
+    href: "/dashboard/seo",
+    pageTitle: "Search Engine Optimization (SEO)",
+    permission: "SEO",
+  },
+  {
+    id: 10,
+    icon: RiSeoFill,
+    label: "Upload",
+    href: "/dashboard/upload",
+    pageTitle: "Upload Images",
+    permission: "SEO",
+  },
+  {
+    id: 11,
+    icon: RiSeoFill,
+    label: "Thisweek",
+    href: "/dashboard/thisweek",
+    pageTitle: "Upload Images",
+    permission: "SEO",
+  },
 ];

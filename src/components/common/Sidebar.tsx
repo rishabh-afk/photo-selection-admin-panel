@@ -13,38 +13,14 @@ const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const [showModal, setShowModal] = useState(true);
   const [list, showList] = useState<any>({ tab: "", list: [] });
-  const { token, user } = useAuth();
+  const { token, } = useAuth();
   if (!token) return null;
 
-  const userRole = user?.role;
-  console.log(" this is the usertype", userRole);
-
-  const photographer = [
-    "Dashboard",
-    "CreatePlan",
-    "Bookings",
-    "uploadPhotos",
-    "approvedPhotos",
-    "Wallet",
-    "subscription",
-    "profile",
-  ];
-
-  //  var filteredTabs;
-
-  let filteredTabs: any[] = []; // Declare filteredTabs in a broader scope
-
-  if (userRole === "photographer") {
-    filteredTabs = tabs.filter((tab) =>
-      photographer.includes(tab.permission)
-    );
-    console.log("This is matching: userRole is 'photographer'.");
-  } else {
-    // Log type of userRole and why it's not matching
-    console.log(
-      `Mismatch: userRole is '${userRole}', which is of type '${typeof userRole}'.`
-    );
-  }
+  // const userPermissions = user?.permissions;
+  const filteredTabs = tabs
+  // ?.filter((tab) =>
+  //   userPermissions?.includes(tab?.permission)
+  // );
 
   const handelModal = () => {
     if (showModal) {
@@ -56,7 +32,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`fixed w-[17%] text-white bg-primary h-full overflow-y-scroll no-scrollbar`}
+      className={`fixed w-[18%] text-white bg-primary h-full overflow-y-scroll no-scrollbar`}
     >
       <div className="flex justify-center pt-5 bg-primary w-[17%] items-center py-[11px] fixed top-0">
         <Link
@@ -116,7 +92,7 @@ const Sidebar: React.FC = () => {
                   <Icon size={18} /> {tab?.label}
                 </span>
                 <span
-                  className={`relative top-[1.4rem] left-[-11.4rem] grid min-h-[45px] min-w-[10px] translate-x-2/4 -translate-y-2/4 place-items-center rounded-r-lg ${
+                  className={`relative top-[1.4rem] left-[-11.8rem] grid min-h-[45px] min-w-[10px] translate-x-2/4 -translate-y-2/4 place-items-center rounded-r-lg ${
                     pathname === tab?.href && "bg-white "
                   }`}
                 ></span>

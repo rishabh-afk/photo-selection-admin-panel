@@ -1,6 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/common/Sidebar";
@@ -18,7 +17,7 @@ const geistMono = localFont({
 });
 
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Pickma | Photo Admin Panel",
@@ -35,6 +34,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} relative antialiased`}
       >
+        {/* <LandingPage></LandingPage> */}
+        {/* <LandingPage /> */}
         <AuthProvider>
           <div className="flex">
             <Sidebar />

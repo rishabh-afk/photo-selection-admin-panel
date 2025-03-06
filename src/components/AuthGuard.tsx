@@ -24,7 +24,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     !token &&
     !localStorage.getItem("adminToken")
   ) {
-    return <Loader />; // or show a loading spinner
+    return <Loader />;
   }
 
   return <>{token ? children : <Loader />}</>;

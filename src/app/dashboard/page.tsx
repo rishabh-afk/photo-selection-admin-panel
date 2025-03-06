@@ -1,10 +1,9 @@
 "use client";
 
-import Home from "@/components/dashboard/Home";
-import Wrapper from "@/components/common/Wrapper";
-import AuthGuard from "../../components/AuthGuard";
-import AccordionTable from "@/components/common/AccordionTable";
 import Loader from "@/components/common/Loader";
+import Subscription from "./subscription/page";
+
+
 
 // Mocked Data
 const dummyTransactions = [
@@ -34,12 +33,12 @@ const dummyTransactions = [
   },
 ];
 
-const dummyOperationsAllowed = [
-  { action: "edit", status: true },
-  { action: "delete", status: false },
-  { action: "approve", status: true },
-  { action: "refund", status: true },
-];
+// const dummyOperationsAllowed = [
+//   { action: "edit", status: true },
+//   { action: "delete", status: false },
+//   { action: "approve", status: true },
+//   { action: "refund", status: true },
+// ];
 
 const Dashboard: React.FC = () => {
   // Since this is dummy data, we can simulate loading and error states
@@ -50,19 +49,7 @@ const Dashboard: React.FC = () => {
   if (loading && !updatedData && !error) return <Loader />;
 
   return (
-    <AuthGuard>
-      <Wrapper>
-        <div>
-          <Home />
-          <AccordionTable
-            isSort={true}
-            Heading={"UpComing Bookings "}
-            transactions={updatedData} // Pass dummy transaction data
-            operationsAllowed={dummyOperationsAllowed} // Pass dummy operations allowed data
-          />
-        </div>
-      </Wrapper>
-    </AuthGuard>
+    <Subscription />
   );
 };
 

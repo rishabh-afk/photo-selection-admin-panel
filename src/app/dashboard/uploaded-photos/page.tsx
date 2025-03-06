@@ -60,7 +60,7 @@ const menuOptions: string[] = [
   "Cancelled Bookings",
 ];
 
-const Booking: React.FC = () => {
+const UploadedPhotos: React.FC = () => {
   const [showModal, setShowModal] = useState(true);
   const [bookingData, setBookingData] = useState<any[]>();
 
@@ -68,7 +68,7 @@ const Booking: React.FC = () => {
     const fetchBookingData = async () => {
       try {
         const response: any = await Fetch(
-          "/api/events/get-all",
+          "/api/events/get-all?status=completed",
           undefined,
           5000,
           true,
@@ -122,17 +122,15 @@ const Booking: React.FC = () => {
                     className="border-b py-5  font-semibold"
                     style={{ borderRadius: "8px 0 0 0" }}
                   >
-                    Order ID
+                    Package ID
                   </th>
                   <th className="border-b py-5  font-semibold">Name</th>
                   <th className="border-b py-5  font-semibold">Date</th>
-                  <th className="border-b py-5  font-semibold">Package</th>
-                  <th className="border-b py-5  font-semibold">Contact</th>
                   <th
                     className="border-b py-5  font-semibold"
                     style={{ borderRadius: "0 8px 0 0" }}
                   >
-                    Status
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -155,24 +153,12 @@ const Booking: React.FC = () => {
                         <td className="py-5 text-sm font-semibold ">
                           {dayjs(booking?.eventDate).format("DD-MM-YYYY")}
                         </td>
-                        <td className="py-5 text-sm font-semibold ">
-                          {booking?.packageName}
-                        </td>
-                        <td className="py-5 text-sm font-semibold ">
-                          {booking?.mobile}
-                        </td>
                         <td className="py-5 text-sm font-semibold flex-justify-center items-center capitalize">
-                          <p
-                            className={`uppercase text-center  text-sm font-semibold py-2 mx-4 rounded-[6px] text-white ${
-                              booking.status === "Current"
-                                ? "bg-[#00897B] px-0"
-                                : booking.status === "initiated"
-                                ? "bg-yellow-300 px-2"
-                                : "bg-orange-500 px-2"
-                            }`}
+                          <Link href={`/dashboard/uploaded-photos/${booking?._id}`}
+                            className={`text-center  text-sm font-semibold py-2 px-5 mx-4 rounded-[6px] text-white bg-primary `}
                           >
-                            {booking?.status}
-                          </p>
+                            {"View"}
+                          </Link>
                         </td>
                       </tr>
                     </React.Fragment>
@@ -186,7 +172,7 @@ const Booking: React.FC = () => {
   );
 };
 
-export default Booking;
+export default UploadedPhotos;
 
 const UploadModal = ({
   open,
